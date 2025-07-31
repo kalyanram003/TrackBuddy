@@ -1,0 +1,6 @@
+2025-07-31 21:52:49.959255+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TASK" not found (this database is empty); SQL statement:
+insert into task (description,end_time,star_time,title,id) values (?,?,?,?,default) [42104-232]
+2025-07-31 21:57:43.145866+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TASK" not found (this database is empty); SQL statement:
+insert into task (description,end_time,star_time,title,id) values (?,?,?,?,default) [42104-232]
