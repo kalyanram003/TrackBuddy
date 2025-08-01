@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Repository.TaskRepository;
 
@@ -15,14 +16,18 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
     
+    public Task createTask(Task task){
+        if(task.getStatus()==null){
+            task.setStatus(TaskStatus.PENDING);
+        }
+        task.setStartTime(LocalDateTime.now());
+        return taskRepository.save(task);
+    }
+
     public List<Task> getAllTasks(){
         return taskRepository.findAll();
     }
 
-    public Task createTask(Task task){
-        task.setStartTime(LocalDateTime.now());
-        return taskRepository.save(task);
-    }
 
     public Task getTaskByID(Long Id){
         return taskRepository.findById(Id).orElseThrow(()->new RuntimeException("Task not found"+Id));

@@ -2,9 +2,10 @@ package com.kalyan.RemoteWorkTracker.Model;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kalyan.RemoteWorkTracker.Enums.Priority;
+import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 
 import jakarta.persistence.*;
 
@@ -16,21 +17,32 @@ public class Task {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="title",nullable=false)
-    private String title;
-    private String description;
+    private String description; 
+    private LocalDateTime dueData;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
+
+    private LocalDateTime scheduledTime;
+    private Long userId;
 
     @CreationTimestamp
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime startTime;
-    private LocalDateTime endTime;
 
-    public Task(Long id, String title, String description, LocalDateTime startTime, LocalDateTime endTime) {
+    public Task(Long id, String description, LocalDateTime dueData, Priority priority, TaskStatus status,
+            LocalDateTime scheduledTime, Long userId, LocalDateTime startTime) {
         this.id = id;
-        this.title = title;
         this.description = description;
+        this.dueData = dueData;
+        this.priority = priority;
+        this.status = status;
+        this.scheduledTime = scheduledTime;
+        this.userId = userId;
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     public Long getId() {
@@ -40,29 +52,62 @@ public class Task {
     public void setId(Long id) {
         this.id = id;
     }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public void setStartTime(LocalDateTime starTime) {
-        this.startTime = starTime;
-    }
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-    public String getTitle() {
-        return title;
-    }
+
     public String getDescription() {
         return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getDueData() {
+        return dueData;
+    }
+
+    public void setDueData(LocalDateTime dueData) {
+        this.dueData = dueData;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getScheduledTime() {
+        return scheduledTime;
+    }
+
+    public void setScheduledTime(LocalDateTime scheduledTime) {
+        this.scheduledTime = scheduledTime;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
-    public LocalDateTime getEndTime() {
-        return endTime;
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
+
     
 }
