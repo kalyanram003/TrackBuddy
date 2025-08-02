@@ -27,17 +27,17 @@ public class TaskController {
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/addTask")
     public Task addTask(@RequestBody Task task){
         return taskService.createTask(task);
     }
 
-    @GetMapping("/{Id}")
+    @GetMapping("taskId/{Id}")
     public Task getTask(@PathVariable Long Id){
         return taskService.getTaskByID(Id);
     }
     
-    @DeleteMapping("/{Id}")
+    @DeleteMapping("taskId/{Id}")
     public String deleteTask(@PathVariable Long Id){
         taskService.deleteTaskByID(Id);
         return "Task Deleted Successfully";
