@@ -1,5 +1,7 @@
 package com.kalyan.RemoteWorkTracker.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Model.User;
 import com.kalyan.RemoteWorkTracker.Service.UserService;
 
@@ -25,5 +28,10 @@ public class UserController {
     @GetMapping("/userId/{Id}")
     public User getUserbyId(@PathVariable Long Id){
         return userService.getUserByID(Id);
+    }
+
+    @GetMapping("/userId/{Id}/task")
+    public List<Task> getUserTask(@PathVariable Long Id){
+        return userService.getUserTasksById(Id);
     }
 }
