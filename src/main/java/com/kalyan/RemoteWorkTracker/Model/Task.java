@@ -31,6 +31,9 @@ public class Task {
 
     private LocalDateTime scheduledTime;
 
+    @Column(name = "remainder_sent")
+    private LocalDateTime reminderSentAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     @JsonBackReference
