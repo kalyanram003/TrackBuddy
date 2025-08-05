@@ -18,7 +18,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private Long taskId;
 
     private String description; 
     private LocalDateTime dueDate;

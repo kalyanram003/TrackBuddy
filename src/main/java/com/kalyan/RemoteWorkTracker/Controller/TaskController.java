@@ -42,5 +42,11 @@ public class TaskController {
         taskService.deleteTaskByID(Id);
         return "Task Deleted Successfully";
     }
+
+    @GetMapping("users/{Id}/prior-tasks")
+    public List<Task> priorTaskList(@PathVariable Long Id){
+        return taskService.getPriorityTaskById(Id);
+    }
+    
     
 }
