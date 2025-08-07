@@ -51,7 +51,7 @@ public class TaskService {
     public List<Task> getPriorityTaskById(Long userId){
         User user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"+userId));
         List<Task> userPriorTasks=user.getTasks().stream()
-        .filter(task->task.getStatus()==TaskStatus.PENDING)
+        .filter(task->task.getStatus()==TaskStatus.PENDING || task.getStatus() == TaskStatus.IN_PROGRESS)
         .sorted(Comparator.comparing(Task::getPriority).reversed().thenComparing(Task::getDueDate)).toList();
         return userPriorTasks;
     }
