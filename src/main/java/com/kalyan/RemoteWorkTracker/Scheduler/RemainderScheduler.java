@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Repository.TaskRepository;
-import com.kalyan.RemoteWorkTracker.Service.EmailService;
+import com.kalyan.RemoteWorkTracker.Util.EmailService;
 
 @Component
 public class RemainderScheduler {

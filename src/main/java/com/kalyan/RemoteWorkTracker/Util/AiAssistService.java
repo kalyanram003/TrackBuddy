@@ -1,4 +1,4 @@
-package com.kalyan.RemoteWorkTracker.Service;
+package com.kalyan.RemoteWorkTracker.Util;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +17,7 @@ import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Model.User;
 import com.kalyan.RemoteWorkTracker.Repository.UserRepository;
+import com.kalyan.RemoteWorkTracker.Service.TaskService;
 
 @Service
 public class AiAssistService {

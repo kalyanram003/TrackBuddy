@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itextpdf.text.DocumentException;
 import com.kalyan.RemoteWorkTracker.Model.Task;
-import com.kalyan.RemoteWorkTracker.Service.PdfReportService;
 import com.kalyan.RemoteWorkTracker.Service.TaskService;
+import com.kalyan.RemoteWorkTracker.Util.PdfReportService;
 
 @RestController
 @RequestMapping("/rwt")

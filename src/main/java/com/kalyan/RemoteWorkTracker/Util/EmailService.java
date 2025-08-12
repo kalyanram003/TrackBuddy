@@ -1,4 +1,4 @@
-package com.kalyan.RemoteWorkTracker.Service;
+package com.kalyan.RemoteWorkTracker.Util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;

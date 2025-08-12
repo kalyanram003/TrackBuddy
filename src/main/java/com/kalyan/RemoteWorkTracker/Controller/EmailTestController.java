@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kalyan.RemoteWorkTracker.Service.EmailService;
+import com.kalyan.RemoteWorkTracker.Util.EmailService;
 
 @RestController
 @RequestMapping("/emailTest")
