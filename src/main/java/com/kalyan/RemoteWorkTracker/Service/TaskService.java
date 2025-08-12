@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Model.User;
@@ -54,6 +55,12 @@ public class TaskService {
         .filter(task->task.getStatus()==TaskStatus.PENDING || task.getStatus() == TaskStatus.IN_PROGRESS)
         .sorted(Comparator.comparing(Task::getPriority).reversed().thenComparing(Task::getDueDate)).toList();
         return userPriorTasks;
+    }
+
+    public List<Task> findByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found: " + userId));
+        return taskRepository.findByUser_UserId(userId);
+        
     }
 
 
