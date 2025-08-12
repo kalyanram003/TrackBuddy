@@ -73,14 +73,11 @@
 
  ## Setup Instructions
 
- **Clone the repository**  :  ```bash git clone https://github.com/kalyanram003/TrackBuddy.git 
- ```
+**Clone the repository**  :  git clone https://github.com/kalyanram003/TrackBuddy.git 
 
 **Build the project**      :  ./mvnw clean install 
 
-
-**Run the application**    :  ```bash./mvnw spring-boot:run
-   ```
+**Run the application**    :  ./mvnw spring-boot:run
 
 **Access the APIs at**     :  http://localhost:8080/...
 
