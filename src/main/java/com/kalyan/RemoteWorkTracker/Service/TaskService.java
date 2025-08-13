@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
@@ -38,7 +40,7 @@ public class TaskService {
 
 
     public Task getTaskByID(Long Id){
-        return taskRepository.findById(Id).orElseThrow(()->new RuntimeException("Task not found"+Id));
+        return taskRepository.findById(Id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Task not found with id " + Id));
     }
 
     public void deleteTaskByID(Long Id){
