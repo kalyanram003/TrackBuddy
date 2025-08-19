@@ -20,10 +20,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/addUser")
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
-    }
 
     @GetMapping("/userId/{Id}")
     public User getUserbyId(@PathVariable Long Id){
