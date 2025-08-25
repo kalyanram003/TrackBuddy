@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kalyan.RemoteWorkTracker.Model.Task;
-import com.kalyan.RemoteWorkTracker.Model.User;
+import com.kalyan.RemoteWorkTracker.Model.Users;
 import com.kalyan.RemoteWorkTracker.Service.UserService;
 
 @RestController
@@ -22,7 +22,7 @@ public class UserController {
 
 
     @GetMapping("/userId/{Id}")
-    public User getUserbyId(@PathVariable Long Id){
+    public Users getUserbyId(@PathVariable Long Id){
         return userService.getUserByID(Id);
     }
 

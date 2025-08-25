@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 import com.kalyan.RemoteWorkTracker.Model.Task;
-import com.kalyan.RemoteWorkTracker.Model.User;
+import com.kalyan.RemoteWorkTracker.Model.Users;
 import com.kalyan.RemoteWorkTracker.Repository.TaskRepository;
 import com.kalyan.RemoteWorkTracker.Repository.UserRepository;
 
@@ -52,7 +52,7 @@ public class TaskService {
 
     // I use COmparator to sort the task according to priority and due date
     public List<Task> getPriorityTaskById(Long userId){
-        User user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"+userId));
+        Users user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"+userId));
         List<Task> userPriorTasks=user.getTasks().stream()
         .filter(task->task.getStatus()==TaskStatus.PENDING || task.getStatus() == TaskStatus.IN_PROGRESS)
         .sorted(Comparator.comparing(Task::getPriority).reversed().thenComparing(Task::getDueDate)).toList();
@@ -60,7 +60,7 @@ public class TaskService {
     }
 
     public List<Task> findByUserId(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found: " + userId));
+        Users user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found: " + userId));
         return taskRepository.findByUser_UserId(userId);
         
     }

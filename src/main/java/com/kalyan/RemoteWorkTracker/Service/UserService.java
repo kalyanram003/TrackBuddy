@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kalyan.RemoteWorkTracker.Model.Task;
-import com.kalyan.RemoteWorkTracker.Model.User;
+import com.kalyan.RemoteWorkTracker.Model.Users;
 import com.kalyan.RemoteWorkTracker.Repository.UserRepository;
 
 @Service
@@ -15,7 +15,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User getUserByID(Long Id){
+    public Users getUserByID(Long Id){
         return userRepository.findById(Id).orElseThrow(()-> new RuntimeException("User not found"));
     }
 

@@ -32,7 +32,7 @@ public class TaskController {
     @Autowired
     private PdfReportService pdfReportService;
 
-    @GetMapping
+    @GetMapping("/allTasks")
     public List<Task> getAllTask(){
         return taskService.getAllTasks();
     }

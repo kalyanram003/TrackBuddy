@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.kalyan.RemoteWorkTracker.Model.User;
+import com.kalyan.RemoteWorkTracker.Model.Users;
 
-public interface UserRepository extends JpaRepository<User,Long>{
-    Optional<User> findByemail(String email);
+public interface UserRepository extends JpaRepository<Users,Long>{
+    Optional<Users> findByemail(String email);
 }

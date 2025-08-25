@@ -36,7 +36,11 @@ public class SecurityConfig {
         http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/rwt/auth/register", "/rwt/auth/login").permitAll()
+            .requestMatchers("/rwt/auth/register", 
+                            "/rwt/auth/login",
+                            "/swagger-ui/**",     
+                            "/v3/api-docs/**",
+                            "/v3/api-docs.yaml").permitAll()
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

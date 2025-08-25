@@ -37,7 +37,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     @JsonBackReference
-    private User user;
+    private Users user;
 
     @CreationTimestamp
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

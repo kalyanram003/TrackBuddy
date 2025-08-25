@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.kalyan.RemoteWorkTracker.Model.User;
+import com.kalyan.RemoteWorkTracker.Model.Users;
 import com.kalyan.RemoteWorkTracker.Repository.UserRepository;
 
 @Service
@@ -17,7 +17,7 @@ public class CustomUserDetailsService implements  UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByemail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        Users user = userRepository.findByemail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
         
         return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
                 .password(user.getPassword())
