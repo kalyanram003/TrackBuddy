@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/RemoteWorkTracker-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the default Spring Boot port
-EXPOSE 8082
+EXPOSE 8080
 
 # Run the jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
