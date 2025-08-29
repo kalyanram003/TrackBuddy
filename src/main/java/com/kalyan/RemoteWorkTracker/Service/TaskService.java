@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+import com.kalyan.RemoteWorkTracker.DTOs.TaskRequest;
 import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Model.Users;
@@ -26,11 +27,24 @@ public class TaskService {
     @Autowired
     private UserRepository userRepository;
     
-    public Task createTask(Task task){
-        if(task.getStatus()==null){
+    public Task createTask(TaskRequest taskRequest){
+        Users user = userRepository.findById(taskRequest.getUserId())
+        .orElseThrow(() -> new RuntimeException("User not found with id " + taskRequest.getUserId()));
+        Task task = new Task();
+        task.setDescription(taskRequest.getDescription());
+        task.setDueDate(taskRequest.getDueDate());
+        task.setPriority(taskRequest.getPriority());
+
+        if (taskRequest.getStatus() == null) {
             task.setStatus(TaskStatus.PENDING);
+        } else {
+            task.setStatus(taskRequest.getStatus());
         }
+
         task.setStartTime(LocalDateTime.now());
+        task.setScheduledTime(taskRequest.getScheduledTime());
+        task.setUser(user);
+
         return taskRepository.save(task);
     }
 

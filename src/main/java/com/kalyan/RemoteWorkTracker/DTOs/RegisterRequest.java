@@ -7,6 +7,9 @@ import lombok.Data;
 @Schema(description = "Register request with email and password")
 public class RegisterRequest{
 
+    @Schema(description = "User name")
+    private String name;
+
     @Schema(description = "User email", example = "example@gmail.com")
     private String email;
 

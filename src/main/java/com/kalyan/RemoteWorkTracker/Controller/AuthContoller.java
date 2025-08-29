@@ -50,8 +50,9 @@ public class AuthContoller {
 		return ResponseEntity.badRequest().body("Error: Email is already registered!");
 	}
 		Users user = new Users();
+		user.setName(request.getName());
         user.setEmail(request.getEmail());
-		request.setPassword(passwordEncoder.encode(request.getPassword()));
+		user.setPassword(passwordEncoder.encode(request.getPassword()));
 		userRepository.save(user);
 		return ResponseEntity.ok("User registered successfully");
 	}		

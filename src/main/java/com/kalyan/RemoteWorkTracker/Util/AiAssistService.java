@@ -14,15 +14,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kalyan.RemoteWorkTracker.Config.OpenAiConfig;
 import com.kalyan.RemoteWorkTracker.Model.Task;
-import com.kalyan.RemoteWorkTracker.Model.Users;
-import com.kalyan.RemoteWorkTracker.Repository.UserRepository;
 import com.kalyan.RemoteWorkTracker.Service.TaskService;
 
 @Service
 public class AiAssistService {
     
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private TaskService taskService;
@@ -34,7 +30,6 @@ public class AiAssistService {
     private RestTemplate restTemplate;
 
     public String getAiAdvice(Long userId){
-        Users user=userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"+userId));
         List<Task> tasks= taskService.getPriorityTaskById(userId);
         
         

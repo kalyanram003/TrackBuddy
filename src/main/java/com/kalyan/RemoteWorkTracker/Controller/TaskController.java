@@ -6,6 +6,7 @@ import org.springframework.http.*;
 
 
 import org.springframework.http.MediaType;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itextpdf.text.DocumentException;
+import com.kalyan.RemoteWorkTracker.DTOs.TaskRequest;
 import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Service.TaskService;
 import com.kalyan.RemoteWorkTracker.Util.PdfReportService;
@@ -39,22 +41,22 @@ public class TaskController {
 
 
     @PostMapping("/addTask")
-    public Task addTask(@RequestBody Task task){
-        return taskService.createTask(task);
+    public Task addTask(@ParameterObject TaskRequest request){
+        return taskService.createTask(request);
     }
 
-    @GetMapping("taskId/{Id}")
+    @GetMapping("/taskId/{Id}")
     public Task getTask(@PathVariable Long Id){
         return taskService.getTaskByID(Id);
     }
     
-    @DeleteMapping("taskId/{Id}")
+    @DeleteMapping("/taskId/{Id}")
     public String deleteTask(@PathVariable Long Id){
         taskService.deleteTaskByID(Id);
         return "Task Deleted Successfully";
     }
 
-    @GetMapping("users/{Id}/prior-tasks")
+    @GetMapping("/users/{Id}/prior-tasks")
     public List<Task> priorTaskList(@PathVariable Long Id){
         return taskService.getPriorityTaskById(Id);
     }
@@ -65,7 +67,7 @@ public class TaskController {
         ByteArrayInputStream pdf = pdfReportService.generatePdfReport(userId);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=task_report.pdf");
+        headers.add("Content-Disposition", "attachment; filename=task_report_user_"+userId+".pdf");
 
         return ResponseEntity
                 .ok()
