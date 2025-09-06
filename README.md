@@ -3,6 +3,8 @@
 ## Overview  
 **Track Buddy** is a backend application built with **Java Spring Boot** and MySQL that helps you manage tasks, users, and schedules efficiently. It combines essential task management tools with powerful features like PDF reporting, AI-powered prioritization, email notifications, and event-driven alerts. It’s designed with clean architecture, security, and scalability in mind.
 
+**Visit now →** [trackbuddy.onrender.com](https://trackbuddy.onrender.com/swagger-ui/index.html)
+
 ## Features  
 👥 **User Management** — Create, update, and manage users, with support for roles, permissions, and authentication via JWT.
 
