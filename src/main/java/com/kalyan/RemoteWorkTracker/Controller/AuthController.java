@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/rwt/auth")
 @Tag(name = "Authentication", description = "Endpoints for registration and login")
-public class AuthContoller {
+public class AuthController {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
@@ -35,7 +35,7 @@ public class AuthContoller {
 	private final AuthenticationManager authenticationManager;
 
 	@Autowired
-	public AuthContoller(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
+	public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtUtil = jwtUtil;

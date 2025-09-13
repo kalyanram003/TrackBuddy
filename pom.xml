@@ -113,21 +113,6 @@
 		</dependency>
 
 
-		<!-- https://mvnrepository.com/artifact/com.alphacephei/vosk -->
-		 <!--Voice assitant  -->
-		<dependency>
-			<groupId>com.alphacephei</groupId>
-			<artifactId>vosk</artifactId>
-			<version>0.3.33</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-
-
-
 
 	
    

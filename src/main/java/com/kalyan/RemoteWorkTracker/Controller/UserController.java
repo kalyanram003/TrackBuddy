@@ -13,7 +13,7 @@ import com.kalyan.RemoteWorkTracker.Model.Users;
 import com.kalyan.RemoteWorkTracker.Service.UserService;
 
 @RestController
-@RequestMapping("rwt")
+@RequestMapping("/rwt")
 public class UserController {
     @Autowired
     private UserService userService;
