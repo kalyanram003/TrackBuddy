@@ -2,8 +2,7 @@ package com.kalyan.RemoteWorkTracker.DTOs;
 
 public class ModifyMemberRequest {
     private Long teamId;
-    private Long memberUserId;
-    private String memberEmail;
+    private String memberEmail; // Required: members are added by email
     private Long actingUserId; // must be leader of the team
 
     public ModifyMemberRequest() {
@@ -15,14 +14,6 @@ public class ModifyMemberRequest {
 
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
-    }
-
-    public Long getMemberUserId() {
-        return memberUserId;
-    }
-
-    public void setMemberUserId(Long memberUserId) {
-        this.memberUserId = memberUserId;
     }
 
     public String getMemberEmail() {

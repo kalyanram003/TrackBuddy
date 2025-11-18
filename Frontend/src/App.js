@@ -16,6 +16,7 @@ import Reports from './pages/Reports';
 import Teams from './pages/Teams';
 import TeamDetails from './pages/TeamDetails';
 import AssignTeamTask from './pages/AssignTeamTask';
+import TeamTasks from './pages/TeamTasks';
 
 // Import styles
 import './styles/index.css';
@@ -59,6 +60,7 @@ function App() {
                         <Route path="/teams" element={<Teams />} />
                         <Route path="/teams/:teamId" element={<TeamDetails />} />
                         <Route path="/teams/:teamId/assign-task" element={<AssignTeamTask />} />
+                        <Route path="/teams/:teamId/tasks" element={<TeamTasks />} />
                       </Routes>
                     </main>
                   </div>

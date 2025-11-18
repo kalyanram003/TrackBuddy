@@ -172,38 +172,43 @@ public class TeamService {
         return taskRepository.save(task);
     }
 
+    public List<Task> getTeamTasks(Long teamId, Long actingUserId) {
+        Team team = teamRepository.findById(teamId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
+        Users actor = userRepository.findById(actingUserId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Acting user not found"));
+
+        // Only team leaders can view team tasks
+        ensureLeader(actor, team);
+
+        // Get all members of the team
+        List<Users> members = teamMembershipRepository.findByTeam(team)
+            .stream()
+            .map(TeamMembership::getUser)
+            .collect(Collectors.toList());
+
+        // Get all tasks assigned to team members
+        return members.stream()
+            .flatMap(member -> taskRepository.findByUser_UserId(member.getUserId()).stream())
+            .collect(Collectors.toList());
+    }
+
     private Users resolveMember(ModifyMemberRequest request) {
-        boolean hasEmail = request.getMemberEmail() != null && !request.getMemberEmail().isBlank();
-        boolean hasId = request.getMemberUserId() != null;
-
-        if (!hasEmail && !hasId) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member email or userId is required");
+        if (request.getMemberEmail() == null || request.getMemberEmail().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member email is required");
         }
 
-        if (hasEmail) {
-            return userRepository.findByemail(request.getMemberEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Member user not found"));
-        }
-
-        return userRepository.findById(request.getMemberUserId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Member user not found"));
+        return userRepository.findByemail(request.getMemberEmail())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Member user not found with email: " + request.getMemberEmail()));
     }
 
     private Users resolveAssignee(AssignTaskRequest request) {
-        boolean hasEmail = request.getAssigneeEmail() != null && !request.getAssigneeEmail().isBlank();
-        boolean hasId = request.getAssigneeUserId() != null;
-
-        if (!hasEmail && !hasId) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assignee email or userId is required");
+        if (request.getAssigneeEmail() == null || request.getAssigneeEmail().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assignee email is required");
         }
 
-        if (hasEmail) {
-            return userRepository.findByemail(request.getAssigneeEmail())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignee user not found"));
-        }
-
-        return userRepository.findById(request.getAssigneeUserId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignee user not found"));
+        return userRepository.findByemail(request.getAssigneeEmail())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignee user not found with email: " + request.getAssigneeEmail()));
     }
 }
 

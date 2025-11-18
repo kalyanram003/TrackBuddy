@@ -61,6 +61,7 @@ export const teamsAPI = {
   removeMember: (data) => apiClient.delete('/rwt/teams/members', { data }),
   assignTask: (data) => apiClient.post('/rwt/teams/assignTask', data),
   deleteTeam: (data) => apiClient.delete('/rwt/teams', { data }),
+  getTeamTasks: (teamId, actingUserId) => apiClient.get('/rwt/teams/tasks', { params: { teamId, actingUserId } }),
 };
 
 // AI API

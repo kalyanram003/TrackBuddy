@@ -15,6 +15,7 @@ const Teams = () => {
       setLoading(true);
       const res = await teamsAPI.myTeams(userId);
       setTeams(res.data || []);
+      setError('');
     } catch (e) {
       setError('Failed to load teams');
     } finally {
@@ -38,6 +39,18 @@ const Teams = () => {
     }
   };
 
+  const handleDeleteTeam = async (teamId) => {
+    if (!window.confirm('Are you sure you want to delete this team? This action cannot be undone.')) {
+      return;
+    }
+    try {
+      await teamsAPI.deleteTeam({ teamId, actingUserId: userId });
+      await loadTeams();
+    } catch (e) {
+      setError(e.response?.data || 'Failed to delete team');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -58,26 +71,36 @@ const Teams = () => {
         <button type="submit" className="btn-primary">Create Team</button>
       </form>
 
+      {error && <div className="text-red-600 bg-red-50 p-3 rounded">{error}</div>}
+
       {loading ? (
         <div>Loading...</div>
-      ) : error ? (
-        <div className="text-red-600">{error}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {teams.map((t) => (
             <div key={t.teamId} className="bg-white rounded-lg shadow p-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-lg font-semibold">{t.name}</h3>
+                <button
+                  onClick={() => handleDeleteTeam(t.teamId)}
+                  className="text-red-600 hover:text-red-800 text-sm font-medium"
+                  title="Delete Team"
+                >
+                  Delete
+                </button>
               </div>
-              <div className="text-sm text-gray-600 mb-4">Owner ID: {t.owner?.userId || t.ownerUserId}</div>
-              <div className="flex space-x-2">
-                <Link to={`/teams/${t.teamId}`} className="btn-secondary">Manage Members</Link>
-                <Link to={`/teams/${t.teamId}/assign-task`} className="btn-secondary">Assign Task</Link>
+              <div className="text-sm text-gray-600 mb-4">
+                Owner: {t.owner?.name || t.owner?.email || 'Unknown'}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link to={`/teams/${t.teamId}`} className="btn-secondary text-sm">Manage Members</Link>
+                <Link to={`/teams/${t.teamId}/assign-task`} className="btn-secondary text-sm">Assign Task</Link>
+                <Link to={`/teams/${t.teamId}/tasks`} className="btn-secondary text-sm">Track Tasks</Link>
               </div>
             </div>
           ))}
           {teams.length === 0 && (
-            <div className="text-gray-600">You are not part of any teams yet.</div>
+            <div className="text-gray-600 col-span-full">You are not part of any teams yet.</div>
           )}
         </div>
       )}

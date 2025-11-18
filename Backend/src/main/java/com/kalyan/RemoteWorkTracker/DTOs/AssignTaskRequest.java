@@ -8,8 +8,7 @@ import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 public class AssignTaskRequest {
     private Long teamId;
     private Long actingUserId;    // must be a team leader
-    private Long assigneeUserId;  // must be member of the team
-    private String assigneeEmail; // optional alternative to userId
+    private String assigneeEmail; // Required: assignee is identified by email
 
     private String description;
     private LocalDateTime dueDate;
@@ -34,14 +33,6 @@ public class AssignTaskRequest {
 
     public void setActingUserId(Long actingUserId) {
         this.actingUserId = actingUserId;
-    }
-
-    public Long getAssigneeUserId() {
-        return assigneeUserId;
-    }
-
-    public void setAssigneeUserId(Long assigneeUserId) {
-        this.assigneeUserId = assigneeUserId;
     }
 
     public String getAssigneeEmail() {

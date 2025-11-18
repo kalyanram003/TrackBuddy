@@ -65,6 +65,11 @@ public class TeamController {
         teamService.deleteTeam(request);
         return ResponseEntity.ok("Team deleted");
     }
+
+    @GetMapping("/tasks")
+    public ResponseEntity<List<Task>> getTeamTasks(@RequestParam Long teamId, @RequestParam Long actingUserId) {
+        return ResponseEntity.ok(teamService.getTeamTasks(teamId, actingUserId));
+    }
 }
 
 
