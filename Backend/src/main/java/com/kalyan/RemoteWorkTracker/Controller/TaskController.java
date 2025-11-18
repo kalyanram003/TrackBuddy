@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -80,6 +81,18 @@ public class TaskController {
     public String deleteTask(@PathVariable Long Id){
         taskService.deleteTaskByID(Id);
         return "Task Deleted Successfully";
+    }
+
+    @PutMapping("/taskId/{Id}")
+    public ResponseEntity<?> updateTask(@PathVariable Long Id, @RequestBody TaskRequest request){
+        try {
+            Task updatedTask = taskService.updateTask(Id, request);
+            return ResponseEntity.ok(updatedTask);
+        } catch (Exception e) {
+            System.err.println("Error updating task: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error updating task: " + e.getMessage());
+        }
     }
 
     @GetMapping("/users/{Id}/prior-tasks")

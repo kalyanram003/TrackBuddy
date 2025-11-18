@@ -62,6 +62,30 @@ public class TaskService {
         taskRepository.deleteById(Id);
     }   
 
+    public Task updateTask(Long taskId, TaskRequest taskRequest) {
+        Task task = taskRepository.findById(taskId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found with id: " + taskId));
+        
+        // Update task fields
+        if (taskRequest.getDescription() != null) {
+            task.setDescription(taskRequest.getDescription());
+        }
+        if (taskRequest.getDueDate() != null) {
+            task.setDueDate(taskRequest.getDueDate());
+        }
+        if (taskRequest.getPriority() != null) {
+            task.setPriority(taskRequest.getPriority());
+        }
+        if (taskRequest.getStatus() != null) {
+            task.setStatus(taskRequest.getStatus());
+        }
+        if (taskRequest.getScheduledTime() != null) {
+            task.setScheduledTime(taskRequest.getScheduledTime());
+        }
+        
+        return taskRepository.save(task);
+    }
+
     // I use COmparator to sort the task according to priority and due date
     public List<Task> getPriorityTaskById(Long userId){
         Users user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"+userId));

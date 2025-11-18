@@ -39,6 +39,7 @@ export const taskAPI = {
   getAllTasks: () => apiClient.get('/rwt/allTasks'),
   createTask: (task) => apiClient.post('/rwt/addTask', task),
   getTaskById: (id) => apiClient.get(`/rwt/taskId/${id}`),
+  updateTask: (id, task) => apiClient.put(`/rwt/taskId/${id}`, task),
   deleteTask: (id) => apiClient.delete(`/rwt/taskId/${id}`),
   getUserTasks: (userId) => apiClient.get(`/rwt/users/${userId}/tasks`)
     .catch(() => apiClient.get(`/rwt/userId/${userId}/task`)), // fallback to older route

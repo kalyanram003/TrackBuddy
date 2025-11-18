@@ -54,22 +54,41 @@ const AssignTeamTask = () => {
 			return;
 		}
 
+		if (!formData.description.trim()) {
+			setError('Task description is required');
+			setLoading(false);
+			return;
+		}
+
 		try {
+			// Parse dates properly - handle null/empty values
+			let dueDate = null;
+			if (formData.dueDate && formData.dueDate.trim()) {
+				dueDate = new Date(formData.dueDate).toISOString();
+			}
+
+			let scheduledTime = null;
+			if (formData.scheduledTime && formData.scheduledTime.trim()) {
+				scheduledTime = new Date(formData.scheduledTime).toISOString();
+			}
+
 			const taskData = {
 				teamId: parseInt(teamId, 10),
 				actingUserId: userId,
 				assigneeEmail: formData.assigneeEmail.trim(),
-				description: formData.description,
-				dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString() : null,
+				description: formData.description.trim(),
+				dueDate: dueDate,
 				priority: formData.priority,
 				status: formData.status,
-				scheduledTime: formData.scheduledTime ? new Date(formData.scheduledTime).toISOString() : null,
+				scheduledTime: scheduledTime,
 			};
 
 			await teamsAPI.assignTask(taskData);
 			navigate(`/teams/${teamId}`);
 		} catch (err) {
-			setError(err.response?.data || 'Failed to assign task');
+			console.error('Assign task error:', err);
+			const errorMessage = err.response?.data || err.message || 'Failed to assign task';
+			setError(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
 		} finally {
 			setLoading(false);
 		}

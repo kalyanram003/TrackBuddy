@@ -17,6 +17,7 @@ import Teams from './pages/Teams';
 import TeamDetails from './pages/TeamDetails';
 import AssignTeamTask from './pages/AssignTeamTask';
 import TeamTasks from './pages/TeamTasks';
+import ViewTask from './pages/ViewTask';
 
 // Import styles
 import './styles/index.css';
@@ -53,7 +54,7 @@ function App() {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/tasks" element={<Tasks />} />
                         <Route path="/tasks/create" element={<CreateTask />} />
-                        <Route path="/tasks/:id" element={<UpdateTask />} />
+                        <Route path="/tasks/:id" element={<ViewTask />} />
                         <Route path="/tasks/:id/edit" element={<UpdateTask />} />
                         <Route path="/ai-assistant" element={<AiAssistant />} />
                         <Route path="/reports" element={<Reports />} />

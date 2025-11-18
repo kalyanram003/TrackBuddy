@@ -55,23 +55,21 @@ const UpdateTask = () => {
     setError('');
 
     try {
-      // Note: The backend doesn't have an update endpoint, so we'll create a new task
-      // In a real implementation, you'd have a PUT endpoint for updating
+      // Prepare task data for update
       const taskData = {
-        ...formData,
+        description: formData.description,
+        priority: formData.priority,
+        status: formData.status,
         dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString() : null,
         scheduledTime: formData.scheduledTime ? new Date(formData.scheduledTime).toISOString() : null,
-        userId: localStorage.getItem('userId') || '1',
       };
 
-      // For now, we'll delete the old task and create a new one
-      // This is a workaround since the backend doesn't have an update endpoint
-      await taskAPI.deleteTask(id);
-      await taskAPI.createTask(taskData);
-      
+      await taskAPI.updateTask(id, taskData);
       navigate('/tasks');
     } catch (err) {
-      setError(err.response?.data || 'Failed to update task. Please try again.');
+      console.error('Update task error:', err);
+      const errorMessage = err.response?.data || err.message || 'Failed to update task. Please try again.';
+      setError(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
     } finally {
       setSaving(false);
     }
