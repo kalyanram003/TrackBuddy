@@ -64,12 +64,14 @@ const AssignTeamTask = () => {
 			// Parse dates properly - handle null/empty values
 			let dueDate = null;
 			if (formData.dueDate && formData.dueDate.trim()) {
-				dueDate = new Date(formData.dueDate).toISOString();
+				// send LocalDateTime-like string without timezone to match backend DTO
+				dueDate = new Date(formData.dueDate).toISOString().slice(0, 19);
 			}
 
 			let scheduledTime = null;
 			if (formData.scheduledTime && formData.scheduledTime.trim()) {
-				scheduledTime = new Date(formData.scheduledTime).toISOString();
+				// send LocalDateTime-like string without timezone to match backend DTO
+				scheduledTime = new Date(formData.scheduledTime).toISOString().slice(0, 19);
 			}
 
 			const taskData = {
@@ -83,6 +85,7 @@ const AssignTeamTask = () => {
 				scheduledTime: scheduledTime,
 			};
 
+			console.log('Assigning team task', taskData);
 			await teamsAPI.assignTask(taskData);
 			navigate(`/teams/${teamId}`);
 		} catch (err) {
