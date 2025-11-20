@@ -60,10 +60,14 @@ const UpdateTask = () => {
         description: formData.description,
         priority: formData.priority,
         status: formData.status,
-        dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString() : null,
-        scheduledTime: formData.scheduledTime ? new Date(formData.scheduledTime).toISOString() : null,
+        // Backend expects LocalDateTime-like string without timezone (slice to seconds)
+        dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString().slice(0, 19) : null,
+        scheduledTime: formData.scheduledTime ? new Date(formData.scheduledTime).toISOString().slice(0, 19) : null,
+        // include userId in update to be explicit (backend will ignore if not needed)
+        userId: parseInt(localStorage.getItem('userId') || '1'),
       };
 
+      console.log('Updating task', id, taskData);
       await taskAPI.updateTask(id, taskData);
       navigate('/tasks');
     } catch (err) {
