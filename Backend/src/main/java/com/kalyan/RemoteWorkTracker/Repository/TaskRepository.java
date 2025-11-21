@@ -6,4 +6,5 @@ import com.kalyan.RemoteWorkTracker.Model.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByUser_UserId(Long userId);
+    List<Task> findByTeamId(Long teamId);
 }

@@ -44,6 +44,9 @@ public class Task {
     @JsonBackReference
     private Users user;
 
+    @Column(name = "team_id", nullable = true)
+    private Long teamId;
+
     @CreationTimestamp
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime startTime;
@@ -121,5 +124,13 @@ public class Task {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
     }
 }

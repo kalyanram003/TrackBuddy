@@ -168,6 +168,7 @@ public class TeamService {
         }
         task.setScheduledTime(request.getScheduledTime());
         task.setUser(assignee);
+        task.setTeamId(team.getTeamId()); // Mark this task as assigned by the team
 
         return taskRepository.save(task);
     }
@@ -181,16 +182,9 @@ public class TeamService {
         // Only team leaders can view team tasks
         ensureLeader(actor, team);
 
-        // Get all members of the team
-        List<Users> members = teamMembershipRepository.findByTeam(team)
-            .stream()
-            .map(TeamMembership::getUser)
-            .collect(Collectors.toList());
-
-        // Get all tasks assigned to team members
-        return members.stream()
-            .flatMap(member -> taskRepository.findByUser_UserId(member.getUserId()).stream())
-            .collect(Collectors.toList());
+        // Only return tasks that were assigned by this team (not personal tasks)
+        // Personal tasks have teamId = null, team-assigned tasks have teamId = teamId
+        return taskRepository.findByTeamId(teamId);
     }
 
     private Users resolveMember(ModifyMemberRequest request) {
