@@ -5,6 +5,7 @@ import TaskCard from '../components/TaskCard';
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
+  const [assignedTasks, setAssignedTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -27,8 +28,13 @@ const Tasks = () => {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const response = await taskAPI.getUserTasks(userId);
-      setTasks(response.data);
+  const response = await taskAPI.getUserTasks(userId);
+  const all = response.data || [];
+  // Separate personal and team-assigned tasks (teamId != null)
+  const personal = all.filter(task => task.teamId == null || task.teamId === undefined);
+  const assigned = all.filter(task => task.teamId != null && task.teamId !== undefined);
+  setTasks(personal);
+  setAssignedTasks(assigned);
     } catch (err) {
       setError('Failed to fetch tasks');
       console.error('Tasks error:', err);
@@ -169,7 +175,7 @@ const Tasks = () => {
       {/* Tasks Count */}
       <div className="flex justify-between items-center">
         <p className="text-gray-600">
-          Showing {filteredTasks.length} of {tasks.length} tasks
+          Showing {filteredTasks.length} of {tasks.length} personal tasks
         </p>
       </div>
 
@@ -205,6 +211,20 @@ const Tasks = () => {
           </div>
         </div>
       )}
+
+      {/* Assigned Tasks (team assigned to the user) */}
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold mb-4">Assigned Tasks</h2>
+        {assignedTasks.length === 0 ? (
+          <div className="card text-center py-6 text-gray-600">No assigned team tasks</div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            {assignedTasks.map((task) => (
+              <TaskCard key={task.taskId} task={task} onDelete={handleDeleteTask} />
+            ))}
+          </div>
+        )}
+      </div>
 
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
