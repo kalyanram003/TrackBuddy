@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+// removed JsonBackReference to allow Task->user to be serialized
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kalyan.RemoteWorkTracker.Enums.Priority;
 import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
@@ -41,7 +41,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
-    @JsonBackReference
+    // keep user reference so task responses include user details (name/email)
     private Users user;
 
     @Column(name = "team_id", nullable = true)

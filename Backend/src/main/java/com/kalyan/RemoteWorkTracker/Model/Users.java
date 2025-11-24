@@ -3,7 +3,7 @@ package com.kalyan.RemoteWorkTracker.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,7 +32,7 @@ public class Users {
     private String password;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Task> tasks = new ArrayList<>();
 
     public Users() {
