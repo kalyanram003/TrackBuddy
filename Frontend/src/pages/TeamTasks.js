@@ -27,7 +27,12 @@ const TeamTasks = () => {
 			setTasks(res.data || []);
 			setError('');
 		} catch (err) {
-			setError(err.response?.data || 'Failed to load team tasks');
+			const accessDeniedMessage = "You don't have access to this feature because you are not a team leader of this team";
+			if (err?.response?.status === 403) {
+				setError(accessDeniedMessage);
+			} else {
+				setError(err.response?.data || 'Failed to load team tasks');
+			}
 		} finally {
 			setLoading(false);
 		}

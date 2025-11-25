@@ -29,7 +29,12 @@ const AssignTeamTask = () => {
 			const res = await teamsAPI.listMembers(teamId);
 			setMembers(res.data || []);
 		} catch (err) {
-			setError('Failed to load team members');
+			const accessDeniedMessage = "You don't have access to this feature because you are not a team leader of this team";
+			if (err?.response?.status === 403) {
+				setError(accessDeniedMessage);
+			} else {
+				setError('Failed to load team members');
+			}
 		} finally {
 			setLoadingMembers(false);
 		}
@@ -90,8 +95,13 @@ const AssignTeamTask = () => {
 			navigate(`/teams/${teamId}`);
 		} catch (err) {
 			console.error('Assign task error:', err);
-			const errorMessage = err.response?.data || err.message || 'Failed to assign task';
-			setError(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
+			const accessDeniedMessage = "You don't have access to this feature because you are not a team leader of this team";
+			if (err?.response?.status === 403) {
+				setError(accessDeniedMessage);
+			} else {
+				const errorMessage = err.response?.data || err.message || 'Failed to assign task';
+				setError(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
+			}
 		} finally {
 			setLoading(false);
 		}
