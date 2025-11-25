@@ -45,9 +45,9 @@ npm start
 1. Open http://localhost:3000
 2. Try logging in with: `admin@gmail.com` / `admin123`
 3. Check browser console for debug logs
-4. Look at the Debug Info component in bottom-right corner
+4. The in-app debug components have been removed. Use browser devtools (Console/Network) or run the test scripts in `src/utils/testConnection.js` to verify API connectivity.
 
-## 🔍 Debug Information
+## 🔍 Debug Information (removed)
 
 ### Backend Changes Made:
 1. **CORS Configuration** - Added CorsConfig.java
@@ -109,7 +109,7 @@ If you need to verify the user exists in the database:
 ## 📞 Need Help?
 
 1. Check browser console for error messages
-2. Look at the Debug Info component
+2. Use the browser Console and Network tabs, or call the API endpoints directly (e.g., POST /rwt/auth/login) to check connectivity.
 3. Verify both frontend and backend are running
 4. Test the backend API directly with curl/PowerShell
 

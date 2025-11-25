@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authAPI } from '../services/api';
-import { testBackendConnection } from '../utils/testConnection';
-import DebugInfo from '../components/DebugInfo';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -26,14 +24,7 @@ const Login = () => {
     setError('');
 
     try {
-      console.log('Attempting login with:', formData); // Debug log
-      
-      // Test backend connection first
-      const connectionTest = await testBackendConnection();
-      console.log('Connection test result:', connectionTest);
-      
-      const response = await authAPI.login(formData);
-      console.log('Login response:', response.data); // Debug log
+  const response = await authAPI.login(formData);
       
       const { token, Email, userId, name } = response.data;
       
@@ -43,16 +34,14 @@ const Login = () => {
       
       navigate('/dashboard');
     } catch (err) {
-      console.error('Login error:', err); // Debug log
-      console.error('Error response:', err.response?.data); // Debug log
-      console.error('Error status:', err.response?.status); // Debug log
+  console.error('Login error:', err);
       
       let errorMessage = 'Login failed. Please try again.';
       
       if (err.response?.status === 401) {
         errorMessage = 'Invalid email or password. Please check your credentials.';
       } else if (err.response?.status === 0) {
-        errorMessage = 'Cannot connect to server. Please check if the backend is running on port 8082.';
+        errorMessage = 'Cannot connect to server. Please check if the backend is running.';
       } else if (err.response?.data) {
         errorMessage = err.response.data;
       }
@@ -133,7 +122,7 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <DebugInfo />
+  {/* DebugInfo component removed for production/deployment */}
     </div>
   );
 };

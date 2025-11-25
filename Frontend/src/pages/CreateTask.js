@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { taskAPI } from '../services/api';
-import TaskCreationDebug from '../components/TaskCreationDebug';
+// TaskCreationDebug removed for production
 
 const CreateTask = () => {
   const [formData, setFormData] = useState({
@@ -40,20 +40,13 @@ const CreateTask = () => {
         scheduledTime: formData.scheduledTime ? new Date(formData.scheduledTime).toISOString().slice(0, 19) : null,
       };
 
-      console.log('Creating task with data:', taskData); // Debug log
-      console.log('API URL:', process.env.REACT_APP_API_URL || 'http://localhost:8082'); // Debug log
-      console.log('Token:', localStorage.getItem('token')); // Debug log
-      console.log('User ID from localStorage:', localStorage.getItem('userId')); // Debug log
-      console.log('User data from localStorage:', localStorage.getItem('user')); // Debug log
+  // Debug logs removed for deployment
       
       const response = await taskAPI.createTask(taskData);
       console.log('Task created successfully:', response.data); // Debug log
       navigate('/tasks');
     } catch (err) {
-      console.error('Task creation error:', err); // Debug log
-      console.error('Error response:', err.response?.data); // Debug log
-      console.error('Error status:', err.response?.status); // Debug log
-      console.error('Error headers:', err.response?.headers); // Debug log
+  console.error('Task creation error:', err);
       
       let errorMessage = 'Failed to create task. Please try again.';
       
@@ -196,7 +189,7 @@ const CreateTask = () => {
           </button>
         </div>
       </form>
-      <TaskCreationDebug />
+  {/* TaskCreationDebug removed for production/deployment */}
     </div>
   );
 };
