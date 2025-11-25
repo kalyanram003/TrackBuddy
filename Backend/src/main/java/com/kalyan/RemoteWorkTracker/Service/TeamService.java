@@ -106,7 +106,6 @@ public class TeamService {
         TeamMembership membership = teamMembershipRepository.findByTeamAndUser(team, member)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Membership not found"));
 
-        // prevent removing the only leader
         if (Objects.equals(member.getUserId(), team.getOwner().getUserId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot remove team owner");
         }
@@ -125,7 +124,6 @@ public class TeamService {
 
     private void ensureLeader(Users actor, Team team) {
         if (!Objects.equals(actor.getUserId(), team.getOwner().getUserId())) {
-            // allow any LEADER role to act
             boolean leader = teamMembershipRepository.findByTeam(team).stream()
                 .anyMatch(m -> Objects.equals(m.getUser().getUserId(), actor.getUserId()) && m.getRole() == TeamRole.LEADER);
             if (!leader) {
@@ -140,7 +138,6 @@ public class TeamService {
         Users actor = userRepository.findById(request.getActingUserId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Acting user not found"));
 
-        // Only owner or any leader can delete
         ensureLeader(actor, team);
 
         teamRepository.delete(team);
@@ -168,7 +165,7 @@ public class TeamService {
         }
         task.setScheduledTime(request.getScheduledTime());
         task.setUser(assignee);
-        task.setTeamId(team.getTeamId()); // Mark this task as assigned by the team
+        task.setTeamId(team.getTeamId()); 
 
         return taskRepository.save(task);
     }
@@ -179,11 +176,7 @@ public class TeamService {
         Users actor = userRepository.findById(actingUserId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Acting user not found"));
 
-        // Only team leaders can view team tasks
         ensureLeader(actor, team);
-
-        // Only return tasks that were assigned by this team (not personal tasks)
-        // Personal tasks have teamId = null, team-assigned tasks have teamId = teamId
         return taskRepository.findByTeamId(teamId);
     }
 

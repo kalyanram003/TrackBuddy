@@ -21,10 +21,8 @@ public class JacksonConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         
-        // Configure JavaTimeModule for LocalDateTime handling
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         
-        // Configure LocalDateTime serialization/deserialization
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(formatter));

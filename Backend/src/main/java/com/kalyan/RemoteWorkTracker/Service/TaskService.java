@@ -66,7 +66,6 @@ public class TaskService {
         Task task = taskRepository.findById(taskId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found with id: " + taskId));
         
-        // Update task fields
         if (taskRequest.getDescription() != null) {
             task.setDescription(taskRequest.getDescription());
         }
@@ -86,7 +85,6 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    // I use COmparator to sort the task according to priority and due date
     public List<Task> getPriorityTaskById(Long userId){
         Users user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"+userId));
         List<Task> userPriorTasks=user.getTasks().stream()

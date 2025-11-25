@@ -52,7 +52,6 @@ public class TaskController {
             System.out.println("ScheduledTime: " + request.getScheduledTime());
             System.out.println("===============================");
             
-            // Check authentication context
             org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
             if (auth != null && auth.isAuthenticated()) {
                 System.out.println("User authenticated: " + auth.getName());

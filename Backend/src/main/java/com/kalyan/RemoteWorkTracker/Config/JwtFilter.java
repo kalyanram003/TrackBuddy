@@ -29,7 +29,6 @@ public class JwtFilter extends OncePerRequestFilter {
         
         String path = request.getRequestURI();
 
-        // Allow public endpoints to pass through without authentication
         if (path.startsWith("/rwt/auth/register") || path.startsWith("/rwt/auth/login") || path.startsWith("/rwt/testTask")) {
             filterChain.doFilter(request, response);
             return;

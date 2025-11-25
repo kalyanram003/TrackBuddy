@@ -33,8 +33,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception {
-    // Enable CORS support in Spring Security so preflight (OPTIONS) requests
-    // are processed using the application's CORS configuration.
     http
     .cors().and()
     .csrf(csrf -> csrf.disable())
