@@ -2,7 +2,7 @@
 FROM node:18 AS frontend-build
 WORKDIR /app/frontend
 
-# copy package files first to leverage caching (package-lock.json optional)
+# copy package files first to leverage caching 
 COPY Frontend/package*.json ./
 RUN npm install
 
@@ -11,7 +11,7 @@ RUN npm run build
 
 
 # Stage 2: Build Spring Boot backend
-FROM eclipse-temurin:21-jdk AS backend-build
+FROM maven:3.9.6-eclipse-temurin-21 AS backend-build
 WORKDIR /app/backend
 
 COPY Backend/pom.xml .
@@ -26,7 +26,7 @@ RUN mvn clean package -DskipTests
 
 
 # Stage 3: Run the application
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 COPY --from=backend-build /app/backend/target/*.jar app.jar
