@@ -198,5 +198,3 @@ public class TeamService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignee user not found with email: " + request.getAssigneeEmail()));
     }
 }
-
-

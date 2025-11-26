@@ -29,7 +29,11 @@ public class JwtFilter extends OncePerRequestFilter {
         
         String path = request.getRequestURI();
 
-        if (path.startsWith("/rwt/auth/register") || path.startsWith("/rwt/auth/login") || path.startsWith("/rwt/testTask")) {
+        if (path.startsWith("/rwt/auth/register") || 
+            path.startsWith("/rwt/auth/login") || 
+            path.startsWith("/rwt/auth/send-otp") || 
+            path.startsWith("/rwt/auth/verify-otp") || 
+            path.startsWith("/rwt/testTask")) {
             filterChain.doFilter(request, response);
             return;
         }

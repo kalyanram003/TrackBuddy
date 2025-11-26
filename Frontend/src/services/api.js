@@ -23,8 +23,10 @@ apiClient.interceptors.request.use((config) => {
 
 // Auth API
 export const authAPI = {
-  register: (data) => apiClient.post('/rwt/auth/register', data),
+  register: (data) => apiClient.post('/rwt/auth/register', data), // Deprecated
   login: (data) => apiClient.post('/rwt/auth/login', data),
+  sendOtp: (data) => apiClient.post('/rwt/auth/send-otp', data),
+  verifyOtp: (data) => apiClient.post('/rwt/auth/verify-otp', data),
 };
 
 // User API

@@ -25,4 +25,20 @@ public class EmailService {
         }
 
     }
+
+    public void sendOtpEmail(String to, String otpCode) {
+        String subject = "TrackBuddy - Your OTP for Account Registration";
+        String body = String.format(
+            "Hello,\n\n" +
+            "Thank you for registering with TrackBuddy!\n\n" +
+            "Your One-Time Password (OTP) for account verification is: %s\n\n" +
+            "This OTP is valid for 10 minutes.\n\n" +
+            "If you did not request this OTP, please ignore this email.\n\n" +
+            "Best regards,\n" +
+            "TrackBuddy Team",
+            otpCode
+        );
+        sendMail(to, subject, body);
+    }
 }
+
