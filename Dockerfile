@@ -11,7 +11,7 @@ RUN npm run build
 
 
 # Stage 2: Build Spring Boot backend
-FROM maven:3.9.6-eclipse-temurin-21 AS backend-build
+FROM eclipse-temurin:21-jdk AS backend-build
 WORKDIR /app/backend
 
 COPY Backend/pom.xml .
