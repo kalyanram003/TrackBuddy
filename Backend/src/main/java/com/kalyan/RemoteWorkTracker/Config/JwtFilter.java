@@ -29,8 +29,15 @@ public class JwtFilter extends OncePerRequestFilter {
         
         String path = request.getRequestURI();
 
-        // Skip JWT validation for public paths
+        // Allow CORS preflight unauthenticated
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Skip JWT validation for public paths (including SPA static entrypoints)
         if (path.equals("/") ||
+            path.equals("/index.html") ||
             path.startsWith("/rwt/auth/register") || 
             path.startsWith("/rwt/auth/login") || 
             path.startsWith("/rwt/auth/send-otp") || 

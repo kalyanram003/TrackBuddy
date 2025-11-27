@@ -34,9 +34,13 @@ public class CorsConfig {
     private String[] getAllowedOrigins() {
         List<String> origins = new ArrayList<>();
         
-        // Always allow localhost for development
-        origins.add("http://localhost:3000");
-        origins.add("http://localhost:3001");
+    // Always allow localhost for development
+    origins.add("http://localhost:3000");
+    origins.add("http://localhost:3001");
+
+    // Allow the Render app domain (both https and no-scheme should be safe to include)
+    origins.add("https://trackbuddy.onrender.com");
+    origins.add("http://trackbuddy.onrender.com");
         
         // Add production origins from environment variable
         if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {

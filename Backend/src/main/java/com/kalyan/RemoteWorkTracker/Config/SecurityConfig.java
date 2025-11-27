@@ -42,6 +42,7 @@ public class SecurityConfig {
                             "/rwt/auth/send-otp",
                             "/rwt/auth/verify-otp",
                             "/",
+                            "/index.html",
                             "/static/**",
                             "/css/**",
                             "/js/**",
