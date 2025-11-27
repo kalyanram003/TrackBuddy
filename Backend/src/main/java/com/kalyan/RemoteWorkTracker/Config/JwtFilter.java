@@ -29,11 +29,20 @@ public class JwtFilter extends OncePerRequestFilter {
         
         String path = request.getRequestURI();
 
-        if (path.startsWith("/rwt/auth/register") || 
+        // Skip JWT validation for public paths
+        if (path.equals("/") ||
+            path.startsWith("/rwt/auth/register") || 
             path.startsWith("/rwt/auth/login") || 
             path.startsWith("/rwt/auth/send-otp") || 
             path.startsWith("/rwt/auth/verify-otp") || 
-            path.startsWith("/rwt/testTask")) {
+            path.startsWith("/rwt/testTask") ||
+            path.startsWith("/static/") ||
+            path.startsWith("/css/") ||
+            path.startsWith("/js/") ||
+            path.startsWith("/images/") ||
+            path.equals("/favicon.ico") ||
+            path.startsWith("/swagger-ui/") ||
+            path.startsWith("/v3/api-docs")) {
             filterChain.doFilter(request, response);
             return;
         }
