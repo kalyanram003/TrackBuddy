@@ -37,6 +37,9 @@ public class SecurityConfig {
     .cors().and()
     .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
+            // Allow all OPTIONS requests (CORS preflight)
+            .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+            // Allow public endpoints
             .requestMatchers("/rwt/auth/register", 
                             "/rwt/auth/login",
                             "/rwt/auth/send-otp",
