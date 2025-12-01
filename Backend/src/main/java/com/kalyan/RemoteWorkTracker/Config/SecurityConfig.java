@@ -46,6 +46,8 @@ public class SecurityConfig {
                             "/rwt/auth/verify-otp",
                             "/",
                             "/index.html",
+                            "/swagger-ui.html",
+                            "/swagger-ui/index.html",
                             "/static/**",
                             "/css/**",
                             "/js/**",

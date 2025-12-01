@@ -38,6 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
         // Skip JWT validation for public paths (including SPA static entrypoints)
         if (path.equals("/") ||
             path.equals("/index.html") ||
+            path.equals("/swagger-ui.html") ||
+            path.equals("/swagger-ui") ||
             path.startsWith("/rwt/auth/register") || 
             path.startsWith("/rwt/auth/login") || 
             path.startsWith("/rwt/auth/send-otp") || 
