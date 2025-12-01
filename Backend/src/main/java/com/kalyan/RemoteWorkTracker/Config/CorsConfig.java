@@ -38,9 +38,12 @@ public class CorsConfig {
     origins.add("http://localhost:3000");
     origins.add("http://localhost:3001");
 
-    // Allow the Render app domain (both https and no-scheme should be safe to include)
+    // Allow the Render backend domain (for same-origin requests)
     origins.add("https://trackbuddy.onrender.com");
     origins.add("http://trackbuddy.onrender.com");
+    
+    // Allow the Vercel frontend domain
+    origins.add("https://track-buddy-cyan.vercel.app");
         
         // Add production origins from environment variable
         if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {
