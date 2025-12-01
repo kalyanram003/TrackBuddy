@@ -3,11 +3,11 @@ FROM maven:3.9.6-eclipse-temurin-21 AS backend-build
 WORKDIR /app/backend
 
 # Copy only maven files first to leverage layer caching
-COPY Backend/pom.xml .
+COPY pom.xml .
 RUN mvn dependency:go-offline
 
 # Copy backend source
-COPY Backend/ ./
+COPY . ./
 
 # Build the project (skip tests for faster builds in CI by default)
 RUN mvn clean package -DskipTests
