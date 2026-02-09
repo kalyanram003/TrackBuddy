@@ -30,6 +30,7 @@ public class TaskService {
         Users user = userRepository.findById(taskRequest.getUserId())
         .orElseThrow(() -> new RuntimeException("User not found with id " + taskRequest.getUserId()));
         Task task = new Task();
+        task.setTitle(taskRequest.getTitle());
         task.setDescription(taskRequest.getDescription());
         task.setDueDate(taskRequest.getDueDate());
         task.setPriority(taskRequest.getPriority());
@@ -41,6 +42,8 @@ public class TaskService {
         }
 
         task.setScheduledTime(taskRequest.getScheduledTime());
+        task.setCompletedAt(taskRequest.getCompletedAt());
+        task.setTimeSpentMinutes(taskRequest.getTimeSpentMinutes());
         task.setUser(user);
 
         return taskRepository.save(task);
@@ -66,6 +69,9 @@ public class TaskService {
         Task task = taskRepository.findById(taskId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found with id: " + taskId));
         
+        if (taskRequest.getTitle() != null) {
+            task.setTitle(taskRequest.getTitle());
+        }
         if (taskRequest.getDescription() != null) {
             task.setDescription(taskRequest.getDescription());
         }
@@ -80,6 +86,12 @@ public class TaskService {
         }
         if (taskRequest.getScheduledTime() != null) {
             task.setScheduledTime(taskRequest.getScheduledTime());
+        }
+        if (taskRequest.getCompletedAt() != null) {
+            task.setCompletedAt(taskRequest.getCompletedAt());
+        }
+        if (taskRequest.getTimeSpentMinutes() != null) {
+            task.setTimeSpentMinutes(taskRequest.getTimeSpentMinutes());
         }
         
         return taskRepository.save(task);

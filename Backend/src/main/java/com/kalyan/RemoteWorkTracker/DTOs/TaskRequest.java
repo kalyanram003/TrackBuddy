@@ -8,11 +8,20 @@ import io.swagger.v3.oas.annotations.Parameter;
 
 public class TaskRequest {
 
+    @Parameter(description = "Task title, example = Complete project report")
+    private String title;
+
     @Parameter(description = "Task description, example = Prepare project report")
     private String description;
 
     @Parameter(description = "Due date in ISO format example = 2025-08-25T17:00:00")
     private LocalDateTime dueDate;
+
+    @Parameter(description = "Completion date in ISO format example = 2025-08-25T17:30:00")
+    private LocalDateTime completedAt;
+
+    @Parameter(description = "Time spent in minutes, example = 60")
+    private Integer timeSpentMinutes;
 
     @Parameter(description = "Task priority", example = "HIGH")
     private Priority priority;
@@ -29,6 +38,14 @@ public class TaskRequest {
     public TaskRequest() {
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -43,6 +60,22 @@ public class TaskRequest {
 
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public Integer getTimeSpentMinutes() {
+        return timeSpentMinutes;
+    }
+
+    public void setTimeSpentMinutes(Integer timeSpentMinutes) {
+        this.timeSpentMinutes = timeSpentMinutes;
     }
 
     public Priority getPriority() {

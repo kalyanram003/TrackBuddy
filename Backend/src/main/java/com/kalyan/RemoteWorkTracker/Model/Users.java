@@ -31,6 +31,15 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
+    @Column(name = "total_tasks_completed")
+    private Integer totalTasksCompleted = 0;
+
+    @Column(name = "total_tasks_created")
+    private Integer totalTasksCreated = 0;
+
+    @Column(name = "average_completion_time_minutes")
+    private Double averageCompletionTimeMinutes = 0.0;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Task> tasks = new ArrayList<>();
@@ -76,5 +85,29 @@ public class Users {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public Integer getTotalTasksCompleted() {
+        return totalTasksCompleted;
+    }
+
+    public void setTotalTasksCompleted(Integer totalTasksCompleted) {
+        this.totalTasksCompleted = totalTasksCompleted;
+    }
+
+    public Integer getTotalTasksCreated() {
+        return totalTasksCreated;
+    }
+
+    public void setTotalTasksCreated(Integer totalTasksCreated) {
+        this.totalTasksCreated = totalTasksCreated;
+    }
+
+    public Double getAverageCompletionTimeMinutes() {
+        return averageCompletionTimeMinutes;
+    }
+
+    public void setAverageCompletionTimeMinutes(Double averageCompletionTimeMinutes) {
+        this.averageCompletionTimeMinutes = averageCompletionTimeMinutes;
     }
 }

@@ -11,11 +11,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity 
 public class Task {
@@ -24,8 +27,23 @@ public class Task {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long taskId;
 
+    @NotBlank
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @NotBlank
+    @Column(name = "description", nullable = false, length = 1000)
     private String description; 
+
+    @NotNull
+    @Column(name = "due_date", nullable = false)
     private LocalDateTime dueDate;
+
+    @Column(name = "completed_at")
+    private LocalDateTime completedAt;
+
+    @Column(name = "time_spent_minutes")
+    private Integer timeSpentMinutes;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
@@ -35,10 +53,10 @@ public class Task {
 
     private LocalDateTime scheduledTime;
 
-    @Column(name = "remainder_sent")
+    @Column(name = "reminder_sent_at")
     private LocalDateTime reminderSentAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
     private Users user;
 
@@ -60,6 +78,14 @@ public class Task {
         this.taskId = taskId;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -74,6 +100,22 @@ public class Task {
 
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public Integer getTimeSpentMinutes() {
+        return timeSpentMinutes;
+    }
+
+    public void setTimeSpentMinutes(Integer timeSpentMinutes) {
+        this.timeSpentMinutes = timeSpentMinutes;
     }
 
     public Priority getPriority() {
