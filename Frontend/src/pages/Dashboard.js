@@ -117,6 +117,26 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Productivity Metrics */}
+      {user && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="card text-center bg-green-50 border border-green-200">
+            <div className="text-2xl font-bold text-green-600">{user.totalTasksCompleted || 0}</div>
+            <div className="text-sm text-gray-600">Tasks Completed</div>
+          </div>
+          <div className="card text-center bg-blue-50 border border-blue-200">
+            <div className="text-2xl font-bold text-blue-600">{user.totalTasksCreated || 0}</div>
+            <div className="text-sm text-gray-600">Tasks Created</div>
+          </div>
+          <div className="card text-center bg-purple-50 border border-purple-200">
+            <div className="text-2xl font-bold text-purple-600">
+              {user.averageCompletionTimeMinutes ? (user.averageCompletionTimeMinutes / 60).toFixed(1) : 0} hrs
+            </div>
+            <div className="text-sm text-gray-600">Avg Completion Time</div>
+          </div>
+        </div>
+      )}
+
       {/* Quick Actions */}
       <div className="card">
         <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>

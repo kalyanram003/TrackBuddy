@@ -99,6 +99,14 @@ const ViewTask = () => {
 
       {/* Flash Card Style View */}
       <div className="bg-white rounded-lg shadow-lg border-2 border-gray-200 p-8 space-y-6">
+        {/* Title */}
+        {task.title && (
+          <div className="border-b border-gray-200 pb-6">
+            <h2 className="text-lg font-medium text-gray-600 mb-2">Title</h2>
+            <h3 className="text-3xl font-semibold text-gray-900">{task.title}</h3>
+          </div>
+        )}
+
         {/* Description - Main Content */}
         <div className="border-b border-gray-200 pb-6">
           <h2 className="text-2xl font-semibold text-gray-900 mb-2">Description</h2>
@@ -141,7 +149,25 @@ const ViewTask = () => {
               {formatDate(task.startTime)}
             </div>
           </div>
+          {task.completedAt && (
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-2">Completed At</label>
+              <div className="text-green-700 font-medium">
+                {formatDate(task.completedAt)}
+              </div>
+            </div>
+          )}
         </div>
+
+        {/* Time Tracking */}
+        {task.timeSpentMinutes > 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">Time Spent</label>
+            <div className="text-gray-900 font-medium text-lg">
+              {task.timeSpentMinutes} minutes ({(task.timeSpentMinutes / 60).toFixed(2)} hours)
+            </div>
+          </div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 pt-6 border-t border-gray-200">

@@ -5,11 +5,13 @@ import { taskAPI } from '../services/api';
 
 const CreateTask = () => {
   const [formData, setFormData] = useState({
+    title: '',
     description: '',
     dueDate: '',
     priority: 'MID',
     status: 'PENDING',
     scheduledTime: '',
+    timeSpentMinutes: 0,
     userId: localStorage.getItem('userId') || '1', // Default for demo
   });
   const [loading, setLoading] = useState(false);
@@ -32,12 +34,14 @@ const CreateTask = () => {
     try {
       // Convert date strings to proper format for backend
       const taskData = {
+        title: formData.title,
         description: formData.description,
         priority: formData.priority,
         status: formData.status,
         userId: parseInt(formData.userId),
         dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString().slice(0, 19) : null,
         scheduledTime: formData.scheduledTime ? new Date(formData.scheduledTime).toISOString().slice(0, 19) : null,
+        timeSpentMinutes: parseInt(formData.timeSpentMinutes) || 0,
       };
 
   // Debug logs removed for deployment
@@ -87,6 +91,22 @@ const CreateTask = () => {
             {error}
           </div>
         )}
+
+        <div>
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            Task Title *
+          </label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            required
+            value={formData.title}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Enter task title..."
+          />
+        </div>
 
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
@@ -170,6 +190,22 @@ const CreateTask = () => {
               className="input-field"
             />
           </div>
+        </div>
+
+        <div>
+          <label htmlFor="timeSpentMinutes" className="block text-sm font-medium text-gray-700 mb-1">
+            Time Spent (minutes)
+          </label>
+          <input
+            id="timeSpentMinutes"
+            name="timeSpentMinutes"
+            type="number"
+            min="0"
+            value={formData.timeSpentMinutes}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="0"
+          />
         </div>
 
         <div className="flex space-x-4">

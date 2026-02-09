@@ -6,11 +6,14 @@ const UpdateTask = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    title: '',
     description: '',
     dueDate: '',
+    completedAt: '',
     priority: 'MID',
     status: 'PENDING',
     scheduledTime: '',
+    timeSpentMinutes: 0,
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -27,11 +30,14 @@ const UpdateTask = () => {
       const task = response.data;
       
       setFormData({
+        title: task.title || '',
         description: task.description || '',
         dueDate: task.dueDate ? new Date(task.dueDate).toISOString().slice(0, 16) : '',
+        completedAt: task.completedAt ? new Date(task.completedAt).toISOString().slice(0, 16) : '',
         priority: task.priority || 'MID',
         status: task.status || 'PENDING',
         scheduledTime: task.scheduledTime ? new Date(task.scheduledTime).toISOString().slice(0, 16) : '',
+        timeSpentMinutes: task.timeSpentMinutes || 0,
       });
     } catch (err) {
       setError('Failed to fetch task details');
@@ -57,12 +63,15 @@ const UpdateTask = () => {
     try {
       // Prepare task data for update
       const taskData = {
+        title: formData.title,
         description: formData.description,
         priority: formData.priority,
         status: formData.status,
         // Backend expects LocalDateTime-like string without timezone (slice to seconds)
         dueDate: formData.dueDate ? new Date(formData.dueDate).toISOString().slice(0, 19) : null,
+        completedAt: formData.completedAt ? new Date(formData.completedAt).toISOString().slice(0, 19) : null,
         scheduledTime: formData.scheduledTime ? new Date(formData.scheduledTime).toISOString().slice(0, 19) : null,
+        timeSpentMinutes: parseInt(formData.timeSpentMinutes) || 0,
         // include userId in update to be explicit (backend will ignore if not needed)
         userId: parseInt(localStorage.getItem('userId') || '1'),
       };
@@ -106,6 +115,22 @@ const UpdateTask = () => {
             {error}
           </div>
         )}
+
+        <div>
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            Task Title *
+          </label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            required
+            value={formData.title}
+            onChange={handleChange}
+            className="input-field"
+            placeholder="Enter task title..."
+          />
+        </div>
 
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
@@ -187,6 +212,38 @@ const UpdateTask = () => {
               value={formData.scheduledTime}
               onChange={handleChange}
               min={getMinDateTime()}
+              className="input-field"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="timeSpentMinutes" className="block text-sm font-medium text-gray-700 mb-1">
+              Time Spent (minutes)
+            </label>
+            <input
+              id="timeSpentMinutes"
+              name="timeSpentMinutes"
+              type="number"
+              min="0"
+              value={formData.timeSpentMinutes}
+              onChange={handleChange}
+              className="input-field"
+              placeholder="0"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="completedAt" className="block text-sm font-medium text-gray-700 mb-1">
+              Completed At
+            </label>
+            <input
+              id="completedAt"
+              name="completedAt"
+              type="datetime-local"
+              value={formData.completedAt}
+              onChange={handleChange}
               className="input-field"
             />
           </div>

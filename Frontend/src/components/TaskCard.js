@@ -46,8 +46,13 @@ const TaskCard = ({ task, onDelete, showUser = false }) => {
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            {task.description}
+            {task.title || task.description}
           </h3>
+          {task.description && task.title && (
+            <p className="text-sm text-gray-600 mb-2">
+              {task.description}
+            </p>
+          )}
           {showUser && task.user && (
             <p className="text-sm text-gray-600 mb-2">
               Assigned to: {task.user.name} ({task.user.email})
@@ -56,6 +61,16 @@ const TaskCard = ({ task, onDelete, showUser = false }) => {
           <p className="text-sm text-gray-600">
             Due: {formatDate(task.dueDate)}
           </p>
+          {task.timeSpentMinutes > 0 && (
+            <p className="text-sm text-gray-500 mt-1">
+              Time spent: {task.timeSpentMinutes} minutes
+            </p>
+          )}
+          {task.completedAt && (
+            <p className="text-sm text-green-600 mt-1">
+              Completed: {formatDate(task.completedAt)}
+            </p>
+          )}
         </div>
         <div className="flex space-x-2">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityClass(task.priority)}`}>

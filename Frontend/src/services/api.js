@@ -75,4 +75,15 @@ export const aiAPI = {
   getAdvice: (userId) => apiClient.get(`/rwt/ai/advice/${userId}`),
 };
 
+// Tags API
+export const tagsAPI = {
+  getUserTags: (userId) => apiClient.get(`/rwt/tags/user/${userId}`),
+  createTag: (tag) => apiClient.post('/rwt/tags', tag),
+  updateTag: (id, tag) => apiClient.put(`/rwt/tags/${id}`, tag),
+  deleteTag: (id) => apiClient.delete(`/rwt/tags/${id}`),
+  getTaskTags: (taskId) => apiClient.get(`/rwt/tasks/${taskId}/tags`),
+  assignTagToTask: (taskId, tagId) => apiClient.post(`/rwt/tasks/${taskId}/tags/${tagId}`),
+  removeTagFromTask: (taskId, tagId) => apiClient.delete(`/rwt/tasks/${taskId}/tags/${tagId}`),
+};
+
 export default apiClient;
