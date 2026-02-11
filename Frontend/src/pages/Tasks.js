@@ -86,6 +86,10 @@ const Tasks = () => {
     }
   };
 
+  const handleTaskUpdate = () => {
+    fetchTasks(); // Refresh the task list
+  };
+
   const clearFilters = () => {
     setFilters({
       status: '',
@@ -187,6 +191,7 @@ const Tasks = () => {
               key={task.taskId}
               task={task}
               onDelete={handleDeleteTask}
+              onUpdate={handleTaskUpdate}
             />
           ))}
         </div>
@@ -220,7 +225,12 @@ const Tasks = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {assignedTasks.map((task) => (
-              <TaskCard key={task.taskId} task={task} onDelete={handleDeleteTask} />
+              <TaskCard 
+                key={task.taskId} 
+                task={task} 
+                onDelete={handleDeleteTask}
+                onUpdate={handleTaskUpdate}
+              />
             ))}
           </div>
         )}

@@ -56,6 +56,7 @@ export const taskAPI = {
 // Reports API (wrap download to match frontend usage)
 export const reportsAPI = {
   downloadTaskReport: (userId) => apiClient.get(`/rwt/users/${userId}/tasks/pdf`, { responseType: 'arraybuffer' }),
+  getReportSummary: (userId) => apiClient.get(`/rwt/reports/summary/${userId}`),
 };
 
 // Teams API
