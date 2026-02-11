@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kalyan.RemoteWorkTracker.DTOs.TaskRequest;
+import com.kalyan.RemoteWorkTracker.Enums.Priority;
 import com.kalyan.RemoteWorkTracker.Enums.TaskStatus;
 import com.kalyan.RemoteWorkTracker.Model.Task;
 import com.kalyan.RemoteWorkTracker.Model.Users;
@@ -83,6 +84,14 @@ public class TaskService {
         }
         if (taskRequest.getStatus() != null) {
             task.setStatus(taskRequest.getStatus());
+            // Auto-set completedAt when status becomes DONE
+            if (taskRequest.getStatus().toString().equalsIgnoreCase("DONE")) {
+                task.setCompletedAt(LocalDateTime.now());
+            }
+            // Clear completedAt when reverting to PENDING
+            else if (taskRequest.getStatus().toString().equalsIgnoreCase("PENDING")) {
+                task.setCompletedAt(null);
+            }
         }
         if (taskRequest.getScheduledTime() != null) {
             task.setScheduledTime(taskRequest.getScheduledTime());
@@ -101,8 +110,16 @@ public class TaskService {
         Users user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"+userId));
         List<Task> userPriorTasks=user.getTasks().stream()
         .filter(task->task.getStatus()==TaskStatus.PENDING || task.getStatus() == TaskStatus.IN_PROGRESS)
-        .sorted(Comparator.comparing(Task::getPriority).reversed().thenComparing(Task::getDueDate)).toList();
+        .sorted(Comparator.comparingInt((Task task) -> getPriorityValue(task.getPriority())).reversed().thenComparing(Task::getDueDate)).toList();
         return userPriorTasks;
+    }
+
+    private int getPriorityValue(Priority priority) {
+        return switch (priority) {
+            case HIGH -> 3;
+            case MID -> 2;
+            case LOW -> 1;
+        };
     }
 
     public List<Task> findByUserId(Long userId) {
